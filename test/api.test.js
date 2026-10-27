@@ -20,6 +20,20 @@ test('GET /api/productes retorna tots els productes', async () => {
   assert.equal(productes.length, 6);
 });
 
+
+test('GET /api/productes inclou mitjana i nombre de ressenyes', async () => {
+  const resposta = await fetch(`${base}/api/productes`);
+  const productes = await resposta.json();
+
+  const samarreta = productes.find((p) => p.id === 1);
+  assert.equal(samarreta.mitjana, 4);
+  assert.equal(samarreta.numRessenyes, 2);
+
+  const dessuadora = productes.find((p) => p.id === 2);
+  assert.equal(dessuadora.mitjana, null);
+  assert.equal(dessuadora.numRessenyes, 0);
+});
+
 test('GET /api/productes?categoria=roba filtra per categoria', async () => {
   const resposta = await fetch(`${base}/api/productes?categoria=roba`);
   const productes = await resposta.json();
