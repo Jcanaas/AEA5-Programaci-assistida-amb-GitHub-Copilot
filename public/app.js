@@ -76,6 +76,7 @@ document.querySelector('#form-ressenya').addEventListener('submit', async (e) =>
   });
   e.target.reset();
   await carregarRessenyes(producteActual.id);
+  await carregarProductes(document.querySelector('#filtre-categoria').value);
 });
 
 document.querySelector('#tanca').addEventListener('click', () => {

@@ -44,3 +44,15 @@ test('GET /api/productes/:id retorna 404 si no existeix', async () => {
   const resposta = await fetch(`${base}/api/productes/999`);
   assert.equal(resposta.status, 404);
 });
+
+test('publicar una ressenya actualitza la mitjana del producte', async () => {
+  await fetch(`${base}/api/ressenyes`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ producteId: 2, autor: 'Test', text: 'Bona.', puntuacio: 4 }),
+  });
+  const productes = await (await fetch(`${base}/api/productes`)).json();
+  const dessuadora = productes.find((p) => p.id === 2);
+  assert.equal(dessuadora.mitjana, 4);
+  assert.equal(dessuadora.numRessenyes, 1);
+});
