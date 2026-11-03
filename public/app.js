@@ -87,4 +87,17 @@ document.querySelector('#filtre-categoria').addEventListener('change', (e) => {
   carregarProductes(e.target.value);
 });
 
+async function carregarCategories() {
+  const resposta = await fetch('/api/categories');
+  const categories = await resposta.json();
+  const desplegable = document.querySelector('#filtre-categoria');
+  for (const c of categories) {
+    const opcio = document.createElement('option');
+    opcio.value = c.nom;
+    opcio.textContent = c.nom.charAt(0).toUpperCase() + c.nom.slice(1);
+    desplegable.appendChild(opcio);
+  }
+}
+
+carregarCategories();
 carregarProductes();
